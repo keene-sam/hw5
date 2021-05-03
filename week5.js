@@ -14,7 +14,8 @@ window.addEventListener('DOMContentLoaded', async function() {
       let location = locationInput.value
       // - Get a reference to the element containing the user-entered days
       let daysInput = document.querySelector(`#days`)
-        
+
+      // - store days value in memory  
       let Days = daysInput.value
   
       // - Check to see if the user entered anything in both; if so:
@@ -51,29 +52,36 @@ window.addEventListener('DOMContentLoaded', async function() {
             </div>
           </div>
         `
-
+        // - check to see if user entered anything in location and days
         if (Days > 0 || location.length>0) {
 
+        //clear past values 
         document.querySelector(`.forecast`).innerHTML=``
 
+        //check to see if information is entered in both location and days
         if (location.length > 0 && Days > 0) {
-        let forecastElement = document.querySelector(`.forecast`)
-        forecastElement.insertAdjacentHTML(`beforeend`,`
-        <div class="text-center space-y-8">
-        <div class="font-bold text-3xl">${Days} Day Forecast</div>
-        <div>`)
+
+        //add title for number of days forecasted
+            let forecastElement = document.querySelector(`.forecast`)
+            forecastElement.insertAdjacentHTML(`beforeend`,`
+            <div class="text-center space-y-8">
+            <div class="font-bold text-3xl">${Days} Day Forecast</div>
+            <div>`)
+      
         // Fill the current element with the location and current weather conditions
+        //loop through number of days forecasted
         for(let i=0; i < dailyForecast.forecastday.length;i++){
+        //create object for number of day in the forecast
             let forecastday=dailyForecast.forecastday[i]
             console.log(forecastday)
-        forecastElement.insertAdjacentHTML(`beforeend`,`
-          <div class="text-center">
-          <img src="https://cdn.weatherapi.com/weather/64x64/day/116.png" class="mx-auto">
-          <h1 class="text-2xl text-bold text-gray-500">${forecastday.date}</h1>
-          <h2 class="text-xl">High ${forecastday.day.maxtemp_f}° – Low ${forecastday.day.mintemp_f}°</h2>
-          <p class="text-gray-500">${forecastday.day.condition.text}</h1>
-          </div>
-        </div>
+            forecastElement.insertAdjacentHTML(`beforeend`,`
+            <div class="text-center">
+                <img src="https://cdn.weatherapi.com/weather/64x64/day/116.png" class="mx-auto">
+                <h1 class="text-2xl text-bold text-gray-500">${forecastday.date}</h1>
+                <h2 class="text-xl">High ${forecastday.day.maxtemp_f}° – Low ${forecastday.day.mintemp_f}°</h2>
+                <p class="text-gray-500">${forecastday.day.condition.text}</h1>
+            </div>
+            </div>
       </div>
         `)
         }
